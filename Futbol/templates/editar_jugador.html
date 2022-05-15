@@ -1,0 +1,34 @@
+{% extends "plantilla.html" %}
+{% block titulo %}Equipos{% endblock %}
+{% block body %}
+
+<div class="container" style="margin-top: 5%;">
+  <form action="/editar_jugadorBD" method="POST">{% csrf_token %}
+    <input type="text" name="id" hidden value="{{jugador.id}}">
+    <div class="form-group">
+      <label>Nombre Equipo</label>
+      <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required value="{{jugador.name}}">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Ciudad Equipo</label>
+      <input type="number" class="form-control" id="goles" name="goles" placeholder="Goles" required value="{{jugador.goals}}">
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Equipo</label>
+      <select class="form-control" id="exampleFormControlSelect1" name="equipo" required>
+        {{jugador.equipo.pk}}
+        {% for e in equipos %}
+          {% if e.id == jugador.equipo.pk %}
+            <option value="{{e.id}}" selected>{{e.name}}</option>
+          {% else %}
+            <option value="{{e.id}}">{{e.name}}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+    <a type="button" class="btn btn-danger" href="/jugadores">Cancelar</a>
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+  </form>
+</div>
+
+{% endblock %}

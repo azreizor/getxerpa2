@@ -1,0 +1,60 @@
+{% extends "plantilla.html" %}
+{% block titulo %}Equipos{% endblock %}
+{% block body %}
+
+<div class="container" style="margin-top: 5%;">
+    {% if messages %}
+        {% for mensaje in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ mensaje }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+    {% endif %}
+    <a type="button" class="btn btn-primary" style="margin-bottom: 5%;" href="/formulario_equipo">Nuevo Equipo</a>
+    <h1> Equipos </h1>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Ciudad</th>
+            <th scope="col">Goles</th>
+            <th scope="col">Creando</th>
+            <th scope="col">Actualizado</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for e in equipos %}
+        <tr>
+            <th scope="row">{{e.id}}</th>
+            <td>{{e.name}}</td>
+            <td>{{e.city}}</td>
+            {% if e.goles == None %}
+              <td>0</td>
+            {% else %}
+              <td>{{e.goles}}</td>
+            {% endif %}
+            <td>{{e.created_at}}</td>
+            <td>{{e.updated_at}}</td>
+            <td>
+                <div class="btn-group" role="group">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Acciones
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                      <a class="dropdown-item" href="editar_equipo/{{e.id}}">Editar</a>
+                      <a class="dropdown-item" href="eliminar_equipo/{{e.id}}">Eliminar</a>
+                    </div>
+                  </div>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+</div>
+
+{% endblock %}
